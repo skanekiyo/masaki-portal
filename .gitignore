@@ -1,0 +1,13 @@
+# OS / エディタが生成するファイル
+desktop.ini
+Thumbs.db
+.DS_Store
+
+# 制作用ツール・素材（Web公開には不要）
+/画像/
+/バックアップ/
+*.py
+
+# 外部（Googleドライブ）へ移した大容量ファイル（25MiB超・Cloudflare公開不可）
+/downloads/mp3/all_music.zip
+/downloads/pdf/manga1wa.pdf
