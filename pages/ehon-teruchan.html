@@ -9,7 +9,7 @@
     <script src="../js/main.js" defer></script>
     <script src="../js/manga-reader.js" defer></script>
   </head>
-  <body>
+  <body class="page-ehon">
     <a class="skip-link" href="#main">本文へ移動</a>
 
     <header class="site-header">
@@ -49,6 +49,8 @@
             data-prefix="ehon1_300dpi_p"
             data-ext=".png"
             data-pad="3"
+            data-count="25"
+            data-tap-nav="vertical"
           >
             <p class="manga-reader-loading">絵本ページを読み込んでいます…</p>
             <div class="manga-reader-stage">
@@ -56,6 +58,16 @@
               <img class="manga-reader-page" src="" alt="" width="1200" height="1700" hidden>
               <button class="manga-reader-nav manga-reader-next" type="button" aria-label="次のページ">次へ</button>
             </div>
+
+            <nav class="ehon-side-controls" aria-label="ページ操作">
+              <button class="button button-secondary manga-reader-first" type="button">最初へ</button>
+              <button class="button button-secondary manga-reader-prev" type="button">前へ</button>
+              <p class="manga-reader-status" aria-live="polite">0 / 0</p>
+              <button class="button button-secondary manga-reader-next" type="button">次へ</button>
+              <button class="button button-secondary manga-reader-last" type="button">最後へ</button>
+              <a class="button button-secondary" href="teruchan.html">てるちゃんページへ</a>
+            </nav>
+
             <div class="manga-reader-controls">
               <button class="button button-secondary manga-reader-first" type="button">最初のページに戻る</button>
               <button class="button button-secondary manga-reader-prev" type="button">前のページ</button>

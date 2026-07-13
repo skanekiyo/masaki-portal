@@ -1333,31 +1333,195 @@ h3 {
 
 }
 
-/* 漫画ページはスマホのとき上部ヘッダーを隠して表示領域を広げる */
-@media (max-width: 600px) {
-  .page-manga .site-header {
-    display: none;
-  }
+/* 絵本の縦コントロール列は既定では非表示（スマホ縦向きのときだけ表示） */
+.ehon-side-controls {
+  display: none;
 }
 
-/* 絵本（横長画像）は縦向きスマホのとき90度回転して大きく表示する */
+/* ===== スマホ(縦向き)は漫画・絵本を全画面固定・スクロール無し・タップ操作にする ===== */
 @media (max-width: 860px) and (orientation: portrait) {
-  .manga-reader--rotate .manga-reader-stage {
-    position: relative;
-    height: 84vh;
+  body.page-manga,
+  body.page-ehon {
     overflow: hidden;
   }
 
-  .manga-reader--rotate .manga-reader-page {
+  .page-manga .site-header,
+  .page-manga .manga-reader-header,
+  .page-ehon .site-header,
+  .page-ehon .manga-reader-header,
+  .page-ehon .site-footer {
+    display: none;
+  }
+
+  .page-manga .manga-reader-section,
+  .page-ehon .manga-reader-section {
+    padding: 0;
+  }
+
+  .page-manga .manga-reader-section > .container,
+  .page-ehon .manga-reader-section > .container {
+    max-width: none;
+    padding: 0;
+  }
+
+  .manga-reader--simple,
+  .manga-reader--rotate {
+    position: fixed;
+    inset: 0;
+    z-index: 50;
+    display: block;
+    margin: 0;
+    padding: 0;
+    background: #000;
+    border: none;
+    border-radius: 0;
+    box-shadow: none;
+    overflow: hidden;
+  }
+
+  .manga-reader--simple .manga-reader-loading,
+  .manga-reader--rotate .manga-reader-loading {
+    display: none;
+  }
+
+  /* --- 漫画: 縦画像＋下部ボタンバー＋左右タップ --- */
+  .manga-reader--simple .manga-reader-stage {
     position: absolute;
-    top: 50%;
-    left: 50%;
-    /* 回転後の縦(=width)も横(=width/縦横比)も画面からはみ出さない幅にする */
-    width: min(84vh, 168vw);
+    top: 0;
+    right: 0;
+    left: 0;
+    bottom: 58px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: auto;
+    overflow: hidden;
+    grid-template-columns: none;
+    touch-action: none;
+  }
+
+  .manga-reader--simple .manga-reader-page {
+    width: 100%;
+    height: 100%;
+    max-height: none;
+    margin: 0;
+    object-fit: contain;
+    background: #000;
+    border-radius: 0;
+    box-shadow: none;
+  }
+
+  .manga-reader--simple .manga-reader-controls {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 58px;
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    margin: 0;
+    padding: 6px 8px;
+    background: rgba(0, 0, 0, 0.72);
+  }
+
+  .manga-reader--simple .manga-reader-controls .manga-reader-home {
+    position: absolute;
+    left: 8px;
+  }
+
+  .manga-reader--simple .manga-reader-controls .manga-reader-first {
+    position: absolute;
+    right: 8px;
+  }
+
+  .manga-reader--simple .manga-reader-controls .button {
+    flex: 0 0 auto;
+    width: auto;
+    min-height: 40px;
+    padding: 6px 10px;
+    font-size: 0.76rem;
+  }
+
+  .manga-reader--simple .manga-reader-controls .manga-reader-status {
+    order: 0;
+    flex: 0 0 auto;
+    min-width: 3.4em;
+    margin: 0;
+    color: #ffffff;
+    font-size: 0.9rem;
+    text-align: center;
+  }
+
+  /* --- 絵本: 90度回転で全画面＋左に縦コントロール列＋上下タップ --- */
+  .manga-reader--rotate .manga-reader-stage {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 56px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: auto;
+    overflow: hidden;
+    grid-template-columns: none;
+    touch-action: none;
+  }
+
+  .manga-reader--rotate .manga-reader-page {
+    position: static;
+    width: min(96vh, calc((100vw - 56px) * 1.7));
     height: auto;
     max-width: none;
     max-height: none;
-    transform: translate(-50%, -50%) rotate(90deg);
+    margin: 0;
+    border-radius: 0;
+    box-shadow: none;
+    transform: rotate(90deg);
+  }
+
+  .manga-reader--rotate .manga-reader-stage .manga-reader-nav,
+  .manga-reader--rotate .manga-reader-controls {
+    display: none;
+  }
+
+  .manga-reader--rotate .ehon-side-controls {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: 56px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    margin: 0;
+    padding: 8px 3px;
+    background: rgba(0, 0, 0, 0.6);
+    z-index: 2;
+  }
+
+  .manga-reader--rotate .ehon-side-controls .button {
+    writing-mode: vertical-rl;
+    text-orientation: sideways;
+    width: auto;
+    min-height: 0;
+    padding: 10px 4px;
+    font-size: 0.8rem;
+    line-height: 1.1;
+  }
+
+  .manga-reader--rotate .ehon-side-controls .manga-reader-status {
+    writing-mode: vertical-rl;
+    text-orientation: sideways;
+    margin: 0;
+    color: #ffffff;
+    font-size: 0.85rem;
+    font-weight: 700;
   }
 }
 
