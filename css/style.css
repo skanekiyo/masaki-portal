@@ -1543,6 +1543,14 @@ h3 {
     transform: translateX(-50%);
   }
 
+  /* 最後へ を「次へ」と「てるちゃんページへ」の中間へ（誤操作防止で距離を確保） */
+  .manga-reader--rotate .ehon-side-controls .manga-reader-last {
+    position: absolute;
+    top: 74%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+
   .manga-reader--rotate .ehon-side-controls .button {
     writing-mode: vertical-rl;
     text-orientation: sideways;
