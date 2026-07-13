@@ -244,6 +244,15 @@ h3 {
   margin-top: 18px;
 }
 
+/* 読み込みに時間がかかる旨の注意書き */
+.load-note {
+  margin: 10px 0 0;
+  color: var(--color-red);
+  font-size: 0.9rem;
+  font-weight: 700;
+  line-height: 1.6;
+}
+
 .button-row .button {
   width: auto;
 }
