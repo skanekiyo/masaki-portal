@@ -4,3 +4,11 @@
   Referrer-Policy: strict-origin-when-cross-origin
   Permissions-Policy: camera=(), microphone=(), geolocation=()
   Content-Security-Policy: default-src 'self'; img-src 'self' data:; script-src 'self'; style-src 'self'; base-uri 'self'; object-src 'none'; frame-ancestors 'none'
+
+# 音楽・ZIP・絵本PDFはスマホでも確実にダウンロードさせる
+# （<audio>の試し聴き再生やリーダーの画像表示はこのヘッダーの影響を受けない）
+/downloads/mp3/*
+  Content-Disposition: attachment
+
+/downloads/pdf/ehon1.pdf
+  Content-Disposition: attachment
