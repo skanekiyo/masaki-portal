@@ -9,7 +9,7 @@
     <script src="../js/main.js" defer></script>
     <script src="../js/manga-reader.js" defer></script>
   </head>
-  <body>
+  <body class="page-manga">
     <a class="skip-link" href="#main">本文へ移動</a>
 
     <header class="site-header">
@@ -38,12 +38,12 @@
           <div class="manga-reader-header">
             <p class="eyebrow">Manga Reader</p>
             <h1>第１話「大器晩成（たいきばんせい）」</h1>
-            <p>ページを1枚ずつめくって漫画を読めます。左右のボタン、またはキーボードの ← → でも操作できます。</p>
+            <p>ページをめくって漫画を読めます。右綴じです。左右へのスワイプ、または下の「次へ・前へ」ボタン、キーボードの ← → でも操作できます。</p>
             <a class="button button-secondary" href="anime-mugen.html">アニメページへ戻る</a>
           </div>
 
           <div
-            class="manga-reader"
+            class="manga-reader manga-reader--simple"
             data-base="../downloads/pdf/manga1wa/"
             data-prefix="manga1wa_300dpi_p"
             data-ext=".png"
@@ -51,16 +51,12 @@
           >
             <p class="manga-reader-loading">漫画ページを読み込んでいます…</p>
             <div class="manga-reader-stage">
-              <button class="manga-reader-nav manga-reader-prev" type="button" aria-label="前のページ">前へ</button>
               <img class="manga-reader-page" src="" alt="" width="1200" height="1700" hidden>
-              <button class="manga-reader-nav manga-reader-next" type="button" aria-label="次のページ">次へ</button>
             </div>
             <div class="manga-reader-controls">
-              <button class="button button-secondary manga-reader-first" type="button">最初のページに戻る</button>
-              <button class="button button-secondary manga-reader-prev" type="button">前のページ</button>
+              <button class="button button-secondary manga-reader-next" type="button">次へ</button>
               <p class="manga-reader-status" aria-live="polite">0 / 0</p>
-              <button class="button button-secondary manga-reader-next" type="button">次のページ</button>
-              <button class="button button-secondary manga-reader-last" type="button">最後のページに行く</button>
+              <button class="button button-secondary manga-reader-prev" type="button">前へ</button>
             </div>
 
           </div>

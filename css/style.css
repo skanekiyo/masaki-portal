@@ -1013,6 +1013,11 @@ h3 {
   gap: 12px;
 }
 
+/* 側面矢印なしのリーダー（漫画）は画像を1カラムで中央表示 */
+.manga-reader--simple .manga-reader-stage {
+  grid-template-columns: minmax(0, 1fr);
+}
+
 .manga-reader-page {
   width: 100%;
   max-height: 78vh;
@@ -1295,8 +1300,10 @@ h3 {
     gap: 8px;
   }
 
-  .manga-reader-controls .manga-reader-prev,
-  .manga-reader-controls .manga-reader-next {
+  /* 側面矢印があるリーダー（絵本）では、重複する下部の前後ボタンを隠す。
+     漫画(--simple)は下部ボタンが主役なので隠さない */
+  .manga-reader:not(.manga-reader--simple) .manga-reader-controls .manga-reader-prev,
+  .manga-reader:not(.manga-reader--simple) .manga-reader-controls .manga-reader-next {
     display: none;
   }
 
@@ -1315,6 +1322,13 @@ h3 {
     font-size: 0.9rem;
   }
 
+}
+
+/* 漫画ページはスマホのとき上部ヘッダーを隠して表示領域を広げる */
+@media (max-width: 600px) {
+  .page-manga .site-header {
+    display: none;
+  }
 }
 
 /* 絵本（横長画像）は縦向きスマホのとき90度回転して大きく表示する */
