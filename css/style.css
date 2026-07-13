@@ -737,27 +737,30 @@ h3 {
   width: 100%;
 }
 
-/* JSで各楽曲に追加する「大きな再生ボタン＋標準プレーヤー」のまとまり */
+/* JSで標準プレーヤーを置き換える独自プレーヤー（丸い再生ボタン＋進行バー） */
 .music-player {
-  display: grid;
-  gap: 10px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.music-player audio {
+  display: none;
 }
 
 .music-play-toggle {
+  flex: 0 0 auto;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 12px;
-  width: 100%;
-  min-height: 56px;
-  padding: 12px 20px;
-  font-size: 1.05rem;
-  font-weight: 700;
+  width: 54px;
+  height: 54px;
+  padding: 0;
   color: #ffffff;
   background: var(--color-red);
   border: none;
-  border-radius: 999px;
-  box-shadow: 0 12px 26px rgba(198, 40, 40, 0.22);
+  border-radius: 50%;
+  box-shadow: 0 10px 22px rgba(198, 40, 40, 0.28);
   cursor: pointer;
   transition: background 0.2s ease, transform 0.1s ease;
 }
@@ -768,7 +771,7 @@ h3 {
 }
 
 .music-play-toggle:active {
-  transform: scale(0.98);
+  transform: scale(0.96);
 }
 
 .music-play-icon {
@@ -782,18 +785,68 @@ h3 {
   content: "";
   position: absolute;
   top: 0;
-  left: 0;
+  left: 2px;
   border-style: solid;
-  border-width: 9px 0 9px 16px;
+  border-width: 9px 0 9px 15px;
   border-color: transparent transparent transparent #ffffff;
 }
 
 .music-play-toggle.is-playing .music-play-icon::before {
   border: none;
+  left: 0;
   width: 5px;
   height: 18px;
   background: #ffffff;
-  box-shadow: 11px 0 0 #ffffff;
+  box-shadow: 10px 0 0 #ffffff;
+}
+
+.music-progress {
+  flex: 1 1 auto;
+  min-width: 0;
+  display: grid;
+  gap: 6px;
+}
+
+.music-progress-bar {
+  position: relative;
+  height: 10px;
+  border-radius: 999px;
+  background: rgba(198, 40, 40, 0.18);
+  cursor: pointer;
+}
+
+.music-progress-bar:focus-visible {
+  outline: 2px solid var(--color-red);
+  outline-offset: 3px;
+}
+
+.music-progress-fill {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 0%;
+  height: 100%;
+  border-radius: 999px;
+  background: var(--color-red);
+}
+
+.music-progress-fill::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  right: -6px;
+  width: 15px;
+  height: 15px;
+  transform: translateY(-50%);
+  border-radius: 50%;
+  background: var(--color-red);
+  box-shadow: 0 2px 6px rgba(17, 24, 39, 0.28);
+}
+
+.music-time {
+  font-size: 0.85rem;
+  color: var(--color-muted);
+  font-variant-numeric: tabular-nums;
 }
 
 .music-item .button {

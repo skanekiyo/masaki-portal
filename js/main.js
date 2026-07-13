@@ -20,6 +20,16 @@ if (navToggle && siteNav) {
   });
 }
 
+function formatTime(seconds) {
+  if (!isFinite(seconds) || seconds < 0) {
+    return "0:00";
+  }
+  const total = Math.floor(seconds);
+  const minutes = Math.floor(total / 60);
+  const secs = total % 60;
+  return minutes + ":" + String(secs).padStart(2, "0");
+}
+
 document.querySelectorAll(".music-item audio").forEach((audio) => {
   // 再生中は他の曲を止める
   audio.addEventListener("play", () => {
@@ -30,7 +40,10 @@ document.querySelectorAll(".music-item audio").forEach((audio) => {
     });
   });
 
-  // 携帯でも押しやすい大きな再生／停止ボタンを追加（標準プレーヤーは残す）
+  // 標準プレーヤーを、押しやすい丸ボタン＋進行バー付きの独自プレーヤーに置き換える
+  audio.removeAttribute("controls");
+  audio.preload = "metadata";
+
   const wrapper = document.createElement("div");
   wrapper.className = "music-player";
 
@@ -38,20 +51,44 @@ document.querySelectorAll(".music-item audio").forEach((audio) => {
   toggle.type = "button";
   toggle.className = "music-play-toggle";
   toggle.setAttribute("aria-label", "再生");
-  toggle.innerHTML =
-    '<span class="music-play-icon" aria-hidden="true"></span>' +
-    '<span class="music-play-label">再生</span>';
+  toggle.innerHTML = '<span class="music-play-icon" aria-hidden="true"></span>';
+
+  const progress = document.createElement("div");
+  progress.className = "music-progress";
+
+  const bar = document.createElement("div");
+  bar.className = "music-progress-bar";
+  bar.setAttribute("role", "slider");
+  bar.setAttribute("aria-label", "再生位置");
+  bar.setAttribute("aria-valuemin", "0");
+  bar.setAttribute("aria-valuenow", "0");
+  bar.tabIndex = 0;
+
+  const fill = document.createElement("div");
+  fill.className = "music-progress-fill";
+  bar.appendChild(fill);
+
+  const time = document.createElement("div");
+  time.className = "music-time";
+  const currentEl = document.createElement("span");
+  currentEl.textContent = "0:00";
+  const durationEl = document.createElement("span");
+  durationEl.textContent = "0:00";
+  time.appendChild(currentEl);
+  time.appendChild(document.createTextNode(" / "));
+  time.appendChild(durationEl);
+
+  progress.appendChild(bar);
+  progress.appendChild(time);
 
   audio.parentNode.insertBefore(wrapper, audio);
   wrapper.appendChild(toggle);
+  wrapper.appendChild(progress);
   wrapper.appendChild(audio);
 
-  const label = toggle.querySelector(".music-play-label");
   const setState = (playing) => {
     toggle.classList.toggle("is-playing", playing);
-    const text = playing ? "停止" : "再生";
-    toggle.setAttribute("aria-label", text);
-    label.textContent = text;
+    toggle.setAttribute("aria-label", playing ? "停止" : "再生");
   };
 
   toggle.addEventListener("click", () => {
@@ -64,5 +101,47 @@ document.querySelectorAll(".music-item audio").forEach((audio) => {
 
   audio.addEventListener("play", () => setState(true));
   audio.addEventListener("pause", () => setState(false));
-  audio.addEventListener("ended", () => setState(false));
+  audio.addEventListener("ended", () => {
+    setState(false);
+    fill.style.width = "0%";
+    currentEl.textContent = "0:00";
+    bar.setAttribute("aria-valuenow", "0");
+  });
+
+  audio.addEventListener("loadedmetadata", () => {
+    durationEl.textContent = formatTime(audio.duration);
+    bar.setAttribute("aria-valuemax", String(Math.floor(audio.duration || 0)));
+  });
+
+  audio.addEventListener("timeupdate", () => {
+    const ratio = audio.duration ? audio.currentTime / audio.duration : 0;
+    fill.style.width = ratio * 100 + "%";
+    currentEl.textContent = formatTime(audio.currentTime);
+    bar.setAttribute("aria-valuenow", String(Math.floor(audio.currentTime)));
+  });
+
+  const seekTo = (clientX) => {
+    if (!isFinite(audio.duration)) {
+      return;
+    }
+    const rect = bar.getBoundingClientRect();
+    const ratio = Math.min(Math.max((clientX - rect.left) / rect.width, 0), 1);
+    audio.currentTime = ratio * audio.duration;
+  };
+
+  bar.addEventListener("click", (event) => seekTo(event.clientX));
+
+  bar.addEventListener("keydown", (event) => {
+    if (!isFinite(audio.duration)) {
+      return;
+    }
+    if (event.key === "ArrowRight") {
+      audio.currentTime = Math.min(audio.currentTime + 5, audio.duration);
+      event.preventDefault();
+    }
+    if (event.key === "ArrowLeft") {
+      audio.currentTime = Math.max(audio.currentTime - 5, 0);
+      event.preventDefault();
+    }
+  });
 });
