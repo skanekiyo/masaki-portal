@@ -1397,7 +1397,8 @@ h3 {
     height: auto;
     overflow: hidden;
     grid-template-columns: none;
-    touch-action: none;
+    /* 二本指ピンチ拡大＆二本指パンを許可（一本指のタップ/スワイプはページめくり用） */
+    touch-action: pinch-zoom;
   }
 
   .manga-reader--simple .manga-reader-page {
