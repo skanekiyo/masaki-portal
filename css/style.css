@@ -148,6 +148,11 @@ code {
   outline: none;
 }
 
+/* ジャンルのサブ項目はPC(横並びメニュー)では非表示。スマホのメニューでのみ表示 */
+.site-nav-sub {
+  display: none;
+}
+
 .nav-toggle {
   display: none;
   width: 44px;
@@ -1179,6 +1184,14 @@ h3 {
 
   .site-nav a {
     padding: 12px 14px;
+  }
+
+  /* スマホのメニューではジャンルのサブ項目を字下げして表示 */
+  .site-nav .site-nav-sub {
+    display: block;
+    padding-left: 30px;
+    font-size: 0.95rem;
+    color: var(--color-ink);
   }
 
   .hero {
