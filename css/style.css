@@ -1402,8 +1402,8 @@ h3 {
     height: auto;
     overflow: hidden;
     grid-template-columns: none;
-    /* 二本指ピンチ拡大＆二本指パンを許可（一本指のタップ/スワイプはページめくり用） */
-    touch-action: pinch-zoom;
+    /* ブラウザ既定のタッチ操作は無効化し、JSでピンチ拡大・パン・ページめくりを制御 */
+    touch-action: none;
   }
 
   .manga-reader--simple .manga-reader-page {
@@ -1493,7 +1493,8 @@ h3 {
     margin: 0;
     border-radius: 0;
     box-shadow: none;
-    transform: rotate(90deg);
+    /* 90度回転・拡大・移動は JS(manga-reader.js) が transform で制御する */
+    transform-origin: center center;
   }
 
   .manga-reader--rotate .manga-reader-stage .manga-reader-nav,
