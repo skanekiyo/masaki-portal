@@ -1338,6 +1338,11 @@ h3 {
   display: none;
 }
 
+/* 「作品サイトへ」ボタンはスマホ全画面時のみ表示（PCはヘッダーの戻るを使用） */
+.manga-reader-home {
+  display: none;
+}
+
 /* ===== スマホ(縦向き)は漫画・絵本を全画面固定・スクロール無し・タップ操作にする ===== */
 @media (max-width: 860px) and (orientation: portrait) {
   body.page-manga,
@@ -1424,13 +1429,20 @@ h3 {
     justify-content: center;
     gap: 6px;
     margin: 0;
-    padding: 6px 8px;
+    /* 左右に余白を確保して、中央の 次へ/ページ数/前へ を端のボタンから離す */
+    padding: 6px 78px;
     background: rgba(0, 0, 0, 0.72);
   }
 
-  .manga-reader--simple .manga-reader-controls .manga-reader-home {
+  .manga-reader--simple .manga-reader-controls .button.manga-reader-home {
+    display: inline-flex;
     position: absolute;
     left: 8px;
+    min-height: 44px;
+    padding: 4px 8px;
+    font-size: 0.6rem;
+    line-height: 1.15;
+    text-align: center;
   }
 
   .manga-reader--simple .manga-reader-controls .manga-reader-first {
