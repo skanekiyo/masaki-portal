@@ -737,6 +737,65 @@ h3 {
   width: 100%;
 }
 
+/* JSで各楽曲に追加する「大きな再生ボタン＋標準プレーヤー」のまとまり */
+.music-player {
+  display: grid;
+  gap: 10px;
+}
+
+.music-play-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  width: 100%;
+  min-height: 56px;
+  padding: 12px 20px;
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: #ffffff;
+  background: var(--color-red);
+  border: none;
+  border-radius: 999px;
+  box-shadow: 0 12px 26px rgba(198, 40, 40, 0.22);
+  cursor: pointer;
+  transition: background 0.2s ease, transform 0.1s ease;
+}
+
+.music-play-toggle:hover,
+.music-play-toggle:focus-visible {
+  background: #a81f1f;
+}
+
+.music-play-toggle:active {
+  transform: scale(0.98);
+}
+
+.music-play-icon {
+  position: relative;
+  display: inline-block;
+  width: 16px;
+  height: 18px;
+}
+
+.music-play-icon::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  border-style: solid;
+  border-width: 9px 0 9px 16px;
+  border-color: transparent transparent transparent #ffffff;
+}
+
+.music-play-toggle.is-playing .music-play-icon::before {
+  border: none;
+  width: 5px;
+  height: 18px;
+  background: #ffffff;
+  box-shadow: 11px 0 0 #ffffff;
+}
+
 .music-item .button {
   justify-self: start;
   min-height: 40px;
@@ -770,6 +829,7 @@ h3 {
   grid-area: title;
 }
 
+.music-item:has(.music-item-cover) .music-player,
 .music-item:has(.music-item-cover) audio {
   grid-area: player;
 }
