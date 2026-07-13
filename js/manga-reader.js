@@ -148,5 +148,51 @@
     }
   });
 
+  // スワイプでページ移動（スマホ）: 右スライド→次のページ / 左スライド→前のページ
+  const stage = reader.querySelector(".manga-reader-stage");
+  if (stage) {
+    let touchStartX = 0;
+    let touchStartY = 0;
+    let tracking = false;
+
+    stage.addEventListener(
+      "touchstart",
+      (event) => {
+        if (event.touches.length !== 1) {
+          tracking = false;
+          return;
+        }
+        touchStartX = event.touches[0].clientX;
+        touchStartY = event.touches[0].clientY;
+        tracking = true;
+      },
+      { passive: true }
+    );
+
+    stage.addEventListener(
+      "touchend",
+      (event) => {
+        if (!tracking) {
+          return;
+        }
+        tracking = false;
+        const touch = event.changedTouches[0];
+        const deltaX = touch.clientX - touchStartX;
+        const deltaY = touch.clientY - touchStartY;
+        const threshold = 40;
+        // 横移動が小さい、または縦スクロールの方が大きい場合は無視
+        if (Math.abs(deltaX) < threshold || Math.abs(deltaX) < Math.abs(deltaY)) {
+          return;
+        }
+        if (deltaX > 0) {
+          showPage(currentPage + 1);
+        } else {
+          showPage(currentPage - 1);
+        }
+      },
+      { passive: true }
+    );
+  }
+
   init();
 })();

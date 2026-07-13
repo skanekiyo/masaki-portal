@@ -1230,24 +1230,89 @@ h3 {
     grid-template-columns: 1fr;
   }
 
+  .manga-reader {
+    padding: 14px;
+    gap: 12px;
+  }
+
   .manga-reader-stage {
+    position: relative;
     grid-template-columns: 1fr;
   }
 
+  /* 画像は1画面に収まる高さに抑える */
+  .manga-reader-page {
+    max-height: 66vh;
+  }
+
+  /* 側面の矢印を画像の左右に重ねた小さな丸ボタンにする */
   .manga-reader-stage .manga-reader-nav {
+    position: absolute;
+    top: 50%;
+    z-index: 2;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 46px;
+    height: 46px;
+    min-width: 0;
+    padding: 0;
+    font-size: 0;
+    background: rgba(255, 255, 255, 0.82);
+    border: 1px solid var(--color-card-border);
+    border-radius: 50%;
+    box-shadow: 0 4px 12px rgba(17, 24, 39, 0.2);
+    transform: translateY(-50%);
+  }
+
+  .manga-reader-stage .manga-reader-prev {
+    left: 8px;
+  }
+
+  .manga-reader-stage .manga-reader-next {
+    right: 8px;
+  }
+
+  .manga-reader-stage .manga-reader-prev::before {
+    content: "\2039";
+  }
+
+  .manga-reader-stage .manga-reader-next::before {
+    content: "\203A";
+  }
+
+  .manga-reader-stage .manga-reader-nav::before {
+    font-size: 1.9rem;
+    font-weight: 700;
+    line-height: 1;
+    color: var(--color-ink);
+  }
+
+  /* 下部コントロールはコンパクトな横並びに。重複する前後ボタンは非表示 */
+  .manga-reader-controls {
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .manga-reader-controls .manga-reader-prev,
+  .manga-reader-controls .manga-reader-next {
     display: none;
   }
 
-  .manga-reader-controls {
-    flex-direction: column;
-  }
-
   .manga-reader-controls .button {
-    width: 100%;
+    flex: 0 1 auto;
+    width: auto;
+    min-height: 38px;
+    padding: 6px 10px;
+    font-size: 0.8rem;
   }
 
   .manga-reader-status {
-    order: -1;
+    order: 0;
+    flex: 1 1 auto;
+    min-width: 0;
+    font-size: 0.9rem;
   }
 
 }
