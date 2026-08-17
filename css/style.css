@@ -339,6 +339,12 @@ h3 {
   scroll-margin-top: 170px;
 }
 
+/* お知らせから絵本カードへジャンプした際、sticky ヘッダーに隠れないように */
+#ehon2,
+#ehon3 {
+  scroll-margin-top: 100px;
+}
+
 .news-list {
   display: grid;
   gap: 14px;
